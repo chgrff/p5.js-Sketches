@@ -1,0 +1,142 @@
+//Odds of it being right at any given minute in a 24 hour period 12(hr) x60(min) x2(AM/PM) = 1/1440 = (.0007%), Experimenting with sliders 
+
+let amPM, sliderTypeX,sliderTypeY,sliderTypesize,sliderTimeX,sliderTimeY;
+
+amPM = ["AM", "PM"];
+
+function setup() {
+  
+  textFont("Glook");
+  createCanvas(400, 400);
+
+  randHour = int(random(1, 12));
+  randMin = int(random(1, 60));
+  amORpm = random(amPM);
+  randRED = int(random(0, 255));  
+  randBLUE= int(random(0, 255));
+  randGREEN = int(random(0, 255));
+  
+  sliderTypesize = buildSlider('Type Size',10, 250);
+  sliderTypeX = buildSlider('Type Y', 25, 350);
+  sliderTypeY = buildSlider('Type X', 40, 225);
+  sliderTimeX = buildSlider('Time X', 55, 150);
+  sliderTimeY = buildSlider('Time Y', 70, 550);
+  sliderSpacing = buildSlider('Spacing', 85 , 150);
+}
+
+function buildSlider(text, yPos, maxVal) {
+  // a "factory" method to create and return our new sliders
+  // create a label
+  label = createSpan(text);
+  label.position(125, yPos);
+  label.style('font-family', 'arial');
+  label.style('color', '0');
+  
+  // create slider and return it 
+  let slider = createSlider(-100, maxVal, maxVal/2, 0.01);
+  slider.position(10, yPos);
+  slider.style('width', '100px');
+  return slider;
+}
+
+function draw() {
+  
+  background("#FDF8F0");
+  
+  strokeWeight(3)
+  stroke(0)
+  fill(randRED,randBLUE,randGREEN)
+  textSize(sliderTypesize.value() / 1.5);
+  
+  text("Is it...", sliderTypeY.value(), sliderTypeX.value());
+
+  textSize(sliderTypesize.value() / 2);
+  text(amORpm, sliderTimeX.value() + sliderSpacing.value() * 2.7, sliderTimeY.value());
+
+  if (randMin <= 9) {
+    strokeWeight(3)
+    stroke(0)
+    textSize(sliderTypesize.value());
+    text("0" + randMin, sliderTimeX.value() + sliderSpacing.value(),  sliderTimeY.value());
+  } else {
+    textSize(sliderTypesize.value());
+    text(randMin, sliderTimeX.value() + sliderSpacing.value(), sliderTimeY.value());
+  }
+
+  if (randHour >= 10) {
+    strokeWeight(3)
+    stroke(0)
+    textSize(sliderTypesize.value());
+    text(randHour + ":", sliderTimeX.value() - sliderSpacing.value(), sliderTimeY.value());
+  } else {
+    strokeWeight(3)
+    stroke(0)
+    textSize(sliderTypesize.value());
+    text(randHour + ": ", sliderTimeX.value() - sliderSpacing.value() / 4, sliderTimeY.value());
+  }
+  
+  push();
+  translate(0,0)
+  fill(255)
+  rect(60,300,295,30) //surrounds text
+  textSize(20);
+  fill(0);
+  stroke(0);                      
+  strokeWeight(0.4);
+  textFont('Gloock');
+  text("Press the Spacebar to Try Again", 65 ,322);
+  pop();  
+}
+
+function keyPressed() {
+  if (key === 'SPACE') {
+    // Call a function to reset your program
+    resetProgram();
+  }}
+
+function resetProgram(){
+      background("#FDF8F0");
+  
+  fill(randRED,randBLUE,randGREEN)
+  textSize(sliderTypesize.value() / 1.5);
+  text("Is it...", sliderTypeY.value(), sliderTypeY.value());
+
+  textSize(sliderTypesize.value() / 2);
+  text(amORpm, sliderTimeX.value() + sliderSpacing.value() * 2.6, sliderTimeY.value());
+
+  if (randMin <= 9) {
+    strokeWeight(3)
+    stroke(0)
+    textSize(sliderTypesize.value());
+    text("0" + randMin, sliderTimeX.value() + sliderSpacing.value(), sliderTimeY.value());
+  } else {
+    strokeWeight(3)
+    stroke(0)
+    textSize(sliderTypesize.value());
+    text(randMin, sliderTimeX.value() + sliderSpacing.value(), sliderTimeY.value());
+  }
+
+  if (randHour >= 10) {
+    strokeWeight(3)
+    stroke(0)
+    textSize(sliderTypesize.value());
+    text(randHour + ":", sliderTimeX.value() - sliderSpacing.value(), sliderTimeY.value());
+  } else {
+    strokeWeight(3)
+    stroke(0)
+    textSize(sliderTypesize.value());
+    text(randHour + ": ", sliderTimeX.value() - sliderSpacing.value() / 4, sliderTimeY.value());
+  }
+  
+  push();
+  translate(0,0)
+  fill(255)
+  rect(145,300,100,30) //surrounds text
+  textSize(20);
+  fill(0);
+  stroke(255);                      
+  strokeWeight(0.4);
+  textFont('Gloock');
+  text("Press Space to Try Again", 150 ,322);
+  pop();  
+}
